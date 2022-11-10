@@ -8,7 +8,9 @@ class mimimax_algorithm:
     # initialize the global variables
     def __init__(self):
         self.decision_tree = []
+        self.values_heuristic = []
 
+    # get the best move to agent 1 by minimax algorithm
     def minimax(self,state,max_height,cur_depth,isMax):
         if(cur_depth == max_height): 
             heur = heuristic()
@@ -16,6 +18,7 @@ class mimimax_algorithm:
 
         final_state = 0
         col = []
+        values = []
 
         # max is the yellow player (bit 1)
         if(isMax):
@@ -41,12 +44,20 @@ class mimimax_algorithm:
                 col.append(next_state)
 
                 temp = self.minimax(next_state,max_height,cur_depth+1,False)
+                #add to the values of heuristic
+                values.append(temp)
                 if(temp > value): 
                     value = temp
                     final_state = next_state
 
             col.append(final_state)
+            values.append(value)
+            values.append(isMax)
+
+            #append to the global arrays
             self.decision_tree.append(col)
+            self.values_heuristic.append(values)
+
             return value
 
         # min is the red player (bit 0)
@@ -74,12 +85,20 @@ class mimimax_algorithm:
 
 
                 temp = self.minimax(next_state,max_height,cur_depth+1,True)
+                #add to the values of heuristic
+                values.append(temp)
+
                 if(temp < value): 
                     value = temp
                     final_state = next_state
 
             col.append(final_state)
+            values.append(value)
+            values.append(isMax)
+
+            #append to the global arrays 
             self.decision_tree.append(col)
+            self.values_heuristic.append(values)
             return value
 
 
@@ -90,20 +109,18 @@ class mimimax_algorithm:
         bit_manp = bit()
         cur_state = int(bit_manp.arr2dToInt(state))
 
-        # add the current state to the decision tree
-        # col = []
-        # col.append(cur_state)
-        # self.decision_tree.append(col)
         
-        print(cur_state)
-        
-        final_state_int = self.minimax(cur_state,max_height,0,True) #assume that the agent is the yellow player
+        final_state_int = self.minimax(cur_state,max_height,0,True) #assume that the agent is the yellow player(bit 1)
         final_state = bit_manp.IntToarr2d(final_state_int) 
 
         # the tree begins with the leaves from left to right showing the 7 states and the 8-th of each state represent the node that the heuristic has choosen
         for i in range(len(self.decision_tree)):
             for j in range(len(self.decision_tree[i])):
-                print(bit_manp.IntToarr2d(self.decision_tree[i][j]))
+                print(bit_manp.IntToarr2d(self.decision_tree[i][j]), end=" ")
+                print(self.values_heuristic[i][j], end = " ")
+                if(j==len(self.decision_tree[i]) -1): print(self.values_heuristic[i][j+1], end = " ")    
+                print() 
+
 
         return final_state,self.decision_tree
 
