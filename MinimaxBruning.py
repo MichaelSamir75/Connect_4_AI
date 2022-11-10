@@ -28,7 +28,7 @@ class mimimax_bruning_algorithm:
     def minimax(self,state,max_height,cur_depth,isMax,alpha,beta):
         if(cur_depth == max_height): 
             heur = heuristic()
-            return heur.get_heuristic(state)
+            return heur.get_heuristic(state,1)
 
         final_state = 0
         col = []
