@@ -45,7 +45,7 @@ class mimimax_algorithm:
                 #add to the tree
                 col.append(next_state)
 
-                temp = self.minimax(next_state,max_height,cur_depth+1,False)
+                temp = self.minimax(next_state,max_height,cur_depth+1,FALSE)
                 if(temp > value): 
                     value = temp
                     final_state = next_state
@@ -109,7 +109,7 @@ class mimimax_algorithm:
         for i in range(len(self.decision_tree)):
             for j in range(len(self.decision_tree[i])):
                 print(bit_manp.IntToarr2d(self.decision_tree[i][j]))
-                
+
         return final_state,self.decision_tree
 
 
