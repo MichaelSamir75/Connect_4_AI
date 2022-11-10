@@ -1,10 +1,5 @@
 from asyncio.windows_events import NULL
-from ctypes import sizeof
-from ctypes.wintypes import LONG
-from itertools import tee
 import math
-from pickle import FALSE, TRUE
-from pygame import init
 from bitManuplation import bit
 from heuristic import heuristic
 
@@ -45,14 +40,14 @@ class mimimax_algorithm:
                 #add to the tree
                 col.append(next_state)
 
-                temp = self.minimax(next_state,max_height,cur_depth+1,FALSE)
+                temp = self.minimax(next_state,max_height,cur_depth+1,False)
                 if(temp > value): 
                     value = temp
                     final_state = next_state
 
             col.append(final_state)
             self.decision_tree.append(col)
-            return final_state
+            return value
 
         # min is the red player (bit 0)
         else:
@@ -78,14 +73,14 @@ class mimimax_algorithm:
                 col.append(next_state)
 
 
-                temp = self.minimax(next_state,max_height,cur_depth+1,TRUE)
+                temp = self.minimax(next_state,max_height,cur_depth+1,True)
                 if(temp < value): 
                     value = temp
                     final_state = next_state
 
             col.append(final_state)
             self.decision_tree.append(col)
-            return final_state
+            return value
 
 
 
@@ -102,7 +97,7 @@ class mimimax_algorithm:
         
         print(cur_state)
         
-        final_state_int = self.minimax(cur_state,max_height,0,TRUE) #assume that the agent is the yellow player
+        final_state_int = self.minimax(cur_state,max_height,0,True) #assume that the agent is the yellow player
         final_state = bit_manp.IntToarr2d(final_state_int) 
 
         # the tree begins with the leaves from left to right showing the 7 states and the 8-th of each state represent the node that the heuristic has choosen
