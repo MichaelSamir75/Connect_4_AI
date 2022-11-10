@@ -1,18 +1,26 @@
-from audioop import minmax
+from asyncio.windows_events import NULL
+from ctypes import sizeof
 from ctypes.wintypes import LONG
 from itertools import tee
 import math
 from pickle import FALSE, TRUE
+from pygame import init
 from bitManuplation import bit
 from heuristic import heuristic
 
 class mimimax_algorithm:
+
+    # initialize the global variables
+    def __init__(self):
+        self.decision_tree = []
+
     def minimax(self,state,max_height,cur_depth,isMax):
         if(cur_depth == max_height): 
             heur = heuristic()
             return heur.get_heuristic(state)
 
         final_state = 0
+        col = []
 
         # max is the yellow player (bit 1)
         if(isMax):
@@ -34,12 +42,16 @@ class mimimax_algorithm:
                 next_state = next_state & ~(7 << startDigitOfCol)  # clear the 3 bit that representing the first empty
                 next_state = next_state | first_empty   # set the first empty in the next state
 
+                #add to the tree
+                col.append(next_state)
 
                 temp = self.minimax(next_state,max_height,cur_depth+1,False)
                 if(temp > value): 
                     value = temp
                     final_state = next_state
 
+            col.append(final_state)
+            self.decision_tree.append(col)
             return final_state
 
         # min is the red player (bit 0)
@@ -62,6 +74,8 @@ class mimimax_algorithm:
                 next_state = next_state & ~(7 << startDigitOfCol)  # clear the 3 bit that representing the first empty
                 next_state = next_state | first_empty   # set the first empty in the next state
 
+                #add to the tree
+                col.append(next_state)
 
 
                 temp = self.minimax(next_state,max_height,cur_depth+1,TRUE)
@@ -69,17 +83,34 @@ class mimimax_algorithm:
                     value = temp
                     final_state = next_state
 
+            col.append(final_state)
+            self.decision_tree.append(col)
             return final_state
 
 
 
     def solve(self,state,max_height):
+
+        # convert the current state to int
         bit_manp = bit()
         cur_state = int(bit_manp.arr2dToInt(state))
+
+        # add the current state to the decision tree
+        # col = []
+        # col.append(cur_state)
+        # self.decision_tree.append(col)
+        
         print(cur_state)
+        
         final_state_int = self.minimax(cur_state,max_height,0,TRUE) #assume that the agent is the yellow player
         final_state = bit_manp.IntToarr2d(final_state_int) 
-        return final_state
+
+        # the tree begins with the leaves from left to right showing the 7 states and the 8-th of each state represent the node that the heuristic has choosen
+        for i in range(len(self.decision_tree)):
+            for j in range(len(self.decision_tree[i])):
+                print(bit_manp.IntToarr2d(self.decision_tree[i][j]))
+                
+        return final_state,self.decision_tree
 
 
 
@@ -93,4 +124,5 @@ state = [[0,0,0,0,0,0,0],
         [1,0,2,1,2,0,2]]
 
 test = mimimax_algorithm()
-print(test.solve(state,4))
+test.solve(state,2)
+# print()
