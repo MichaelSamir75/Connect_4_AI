@@ -14,7 +14,7 @@ class mimimax_algorithm:
     def minimax(self,state,max_height,cur_depth,isMax):
         if(cur_depth == max_height): 
             heur = heuristic()
-            return heur.get_heuristic(state)
+            return heur.get_heuristic(state,isMax)
 
         final_state = 0
         col = []

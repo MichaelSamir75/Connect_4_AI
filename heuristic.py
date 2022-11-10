@@ -134,6 +134,6 @@ class heuristic:
         if x == 1:
             temp1 = (5*res1[2] + 4*res1[1] + 3 * res1[0]) - (5*res2[2] + 4*res2[1] + 3 * res2[0])
             return temp1
-        elif x == 2:
+        elif x == 0:
             temp1 = (5*res2[2] + 4*res2[1] + 3 * res2[0]) - (5*res1[2] + 4*res1[1] + 3 * res1[0])
             return temp1
