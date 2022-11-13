@@ -110,7 +110,10 @@ class mimimax_algorithm:
         cur_state = int(bit_manp.arr2dToInt(state))
 
         
-        final_state_int = self.minimax(cur_state,max_height,0,True) #assume that the agent is the yellow player(bit 1)
+        self.minimax(cur_state,max_height,0,True) #assume that the agent is the yellow player(bit 1)
+        
+        # the final state is the last element in the decision tree (every state contains 8 states)
+        final_state_int = self.decision_tree[len(self.decision_tree)-1][7]
         final_state = bit_manp.IntToarr2d(final_state_int) 
 
         # the tree begins with the leaves from left to right showing the 7 states and the 8-th of each state represent the node that the heuristic has choosen
@@ -126,8 +129,6 @@ class mimimax_algorithm:
 
 
 
-
-
 state = [[0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0],
         [0,0,0,0,0,0,0],
@@ -136,5 +137,5 @@ state = [[0,0,0,0,0,0,0],
         [1,0,2,1,2,0,2]]
 
 test = mimimax_algorithm()
-test.solve(state,2)
-# print()
+res,decision_tree = test.solve(state,2)
+print(res)
