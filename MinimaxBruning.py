@@ -5,6 +5,7 @@ from heuristic import heuristic
 class mimimax_bruning_algorithm:
     # initialize the global variables
     def __init__(self):
+        self.final_result = []
         self.decision_tree = []
         self.values_heuristic = []
 
@@ -49,6 +50,7 @@ class mimimax_bruning_algorithm:
                 if beta <= alpha:
                     break
 
+            self.final_result.append(final_state)
             col.append(final_state)
             values.append(value)
             values.append(isMax)
@@ -88,6 +90,7 @@ class mimimax_bruning_algorithm:
                 if beta <= alpha:
                     break
 
+            self.final_result.append(final_state)
             col.append(final_state)
             values.append(value)
             values.append(isMax)
@@ -103,9 +106,10 @@ class mimimax_bruning_algorithm:
         # convert the current state to int
         bit_manp = bit()
         cur_state = int(bit_manp.arr2dToInt(state))
+        # print(f"final {state}")
         
         self.minimax(cur_state,max_height,0,True,-math.inf,math.inf) #assume that the agent is the yellow player
-        final_state_int = self.decision_tree[len(self.decision_tree)-1][7]
+        final_state_int = self.final_result[-1]
         final_state = bit_manp.IntToarr2d(final_state_int) 
         # print(f"final {final_state}")
 
@@ -125,13 +129,13 @@ class mimimax_bruning_algorithm:
 
 
 
-state = [[0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0],
-        [0,0,0,0,0,0,0],
-        [0,0,0,2,0,0,0],
-        [1,0,0,1,0,0,0],
-        [1,0,2,1,2,0,2]]
+# state = [[0,0,0,0,0,0,0],
+#         [0,0,0,2,0,1,2],
+#         [2,0,1,2,1,2,1],
+#         [1,1,2,2,2,2,1],
+#         [1,2,1,1,1,2,1],
+#         [1,2,2,1,2,1,2]]
 
-test = mimimax_bruning_algorithm()
-test.solve(state,2)
-print()
+# test = mimimax_bruning_algorithm()
+# test.solve(state,4)
+# print()
