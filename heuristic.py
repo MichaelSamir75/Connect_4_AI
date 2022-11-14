@@ -126,16 +126,16 @@ class heuristic:
     def get_heuristic(self,state,x):
         bit_manp = bit()
         arr_state = bit_manp.IntToarr2d(state)
-        print("arr_state: " , end="")
-        print(arr_state)
+        # print("arr_state: " , end="")
+        # print(arr_state)
         self.solOfplayer = [0,0,0]
         res1 = self.get_heuristic_red(arr_state,1)
         self.solOfplayer = [0,0,0]
-        print("res1:", end="")
-        print(res1)
+        # print("res1:", end="")
+        # print(res1)
         res2 = self.get_heuristic_red(arr_state,2)
-        print("res2:", end="")
-        print(res2)
+        # print("res2:", end="")
+        # print(res2)
         if x == True:
             temp1 = (10*res1[2] + 3*res1[1] + 1 * res1[0]) - (10*res2[2] + 3*res2[1] + 1 * res2[0])
             res1= [0,0,0]

@@ -14,7 +14,7 @@ class mimimax_algorithm:
         if(cur_depth == max_height): 
             heur = heuristic()
             x = heur.get_heuristic(state,isMax)
-            print(x)
+            # print(x)
             return x
 
         final_state = 0
