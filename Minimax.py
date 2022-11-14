@@ -113,7 +113,9 @@ class mimimax_algorithm:
         self.minimax(cur_state,max_height,0,True) #assume that the agent is the yellow player(bit 1)
         
         # the final state is the last element in the decision tree (every state contains 8 states)
-        final_state_int = self.decision_tree[len(self.decision_tree)-1][7]
+        decision_tree_size = len(self.decision_tree)
+        last_col_decision_tree_size = len(self.decision_tree[decision_tree_size -1])
+        final_state_int = self.decision_tree[decision_tree_size-1][last_col_decision_tree_size-1]
         final_state = bit_manp.IntToarr2d(final_state_int) 
 
         # the tree begins with the leaves from left to right showing the 7 states and the 8-th of each state represent the node that the heuristic has choosen
