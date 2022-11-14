@@ -34,7 +34,7 @@ class bit:
                     x = x + "0"
             x = x+ "0"
         y = x[::-1]
-        print(y)
+        # print(y)
         return self.binaryToDecimal(int(y))
     
     def DecimalToBinary(self,num):
