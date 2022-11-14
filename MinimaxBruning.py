@@ -30,7 +30,7 @@ class mimimax_bruning_algorithm:
                 x = x << startDigitOfCol # shift left to the col i
                 first_empty =  x & state
                 first_empty = first_empty >> startDigitOfCol # shift right to know the number in decimal
-                if(first_empty == 6): return -math.inf  #the column is full
+                if(first_empty == 6): continue  #the column is full
                 next_state = state | (1 << (startDigitOfCol + first_empty + 3))     # 1 indicate the player color
                 first_empty+=1
                 first_empty = first_empty << startDigitOfCol
@@ -70,7 +70,7 @@ class mimimax_bruning_algorithm:
                 x = x << startDigitOfCol # shift left to the col i
                 first_empty =  x & state
                 first_empty = first_empty >> startDigitOfCol # shift right to know the number in decimal
-                if(first_empty == 6): return math.inf  #the column is full
+                if(first_empty == 6): continue  #the column is full
                 next_state = state | (0 << (startDigitOfCol + first_empty + 3))  # 0 indicate the player color(redundant step because it's actually equal 0)
                 first_empty+=1
                 first_empty = first_empty << startDigitOfCol

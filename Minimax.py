@@ -14,7 +14,6 @@ class mimimax_algorithm:
         if(cur_depth == max_height): 
             heur = heuristic()
             x = heur.get_heuristic(state,isMax)
-            # print(x)
             return x
 
         final_state = 0
@@ -34,19 +33,20 @@ class mimimax_algorithm:
                 x = x << startDigitOfCol # shift left to the col i
                 first_empty =  x & state
                 first_empty = first_empty >> startDigitOfCol # shift right to know the number in decimal
-                if(first_empty == 6): return -math.inf  #the column is full
+                if(first_empty == 6): continue  #the column is full
                 next_state = state | (1 << (startDigitOfCol + first_empty + 3))     # 1 indicate the player color
                 first_empty+=1
                 first_empty = first_empty << startDigitOfCol
                 next_state = next_state & ~(7 << startDigitOfCol)  # clear the 3 bit that representing the first empty
                 next_state = next_state | first_empty   # set the first empty in the next state
 
+                temp = self.minimax(next_state,max_height,cur_depth+1,False)
+
                 #add to the tree
                 col.append(next_state)
-
-                temp = self.minimax(next_state,max_height,cur_depth+1,False)
                 #add to the values of heuristic
                 values.append(temp)
+
                 if(temp > value): 
                     value = temp
                     final_state = next_state
@@ -74,18 +74,18 @@ class mimimax_algorithm:
                 x = x << startDigitOfCol # shift left to the col i
                 first_empty =  x & state
                 first_empty = first_empty >> startDigitOfCol # shift right to know the number in decimal
-                if(first_empty == 6): return math.inf  #the column is full
+                if(first_empty == 6): continue  #the column is full
                 next_state = state | (0 << (startDigitOfCol + first_empty + 3))  # 0 indicate the player color(redundant step because it's actually equal 0)
                 first_empty+=1
                 first_empty = first_empty << startDigitOfCol
                 next_state = next_state & ~(7 << startDigitOfCol)  # clear the 3 bit that representing the first empty
                 next_state = next_state | first_empty   # set the first empty in the next state
 
+                
+                temp = self.minimax(next_state,max_height,cur_depth+1,True)
+
                 #add to the tree
                 col.append(next_state)
-
-
-                temp = self.minimax(next_state,max_height,cur_depth+1,True)
                 #add to the values of heuristic
                 values.append(temp)
 
@@ -106,10 +106,12 @@ class mimimax_algorithm:
 
     def solve(self,state,max_height):
 
+        #clear the decision tree in every call
+        self.decision_tree.clear()
+
         # convert the current state to int
         bit_manp = bit()
         cur_state = int(bit_manp.arr2dToInt(state))
-
         
         self.minimax(cur_state,max_height,0,True) #assume that the agent is the yellow player(bit 1)
         
@@ -119,7 +121,7 @@ class mimimax_algorithm:
         final_state_int = self.decision_tree[decision_tree_size-1][last_col_decision_tree_size-1]
         final_state = bit_manp.IntToarr2d(final_state_int) 
 
-        # # the tree begins with the leaves from left to right showing the 7 states and the 8-th of each state represent the node that the heuristic has choosen
+        # the tree begins with the leaves from left to right showing the 7 states and the 8-th of each state represent the node that the heuristic has choosen
         # for i in range(len(self.decision_tree)):
         #     for j in range(len(self.decision_tree[i])):
         #         print(bit_manp.IntToarr2d(self.decision_tree[i][j]), end=" ")
