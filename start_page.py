@@ -57,12 +57,11 @@ class Start():
         font_rules = pygame.font.Font("assets/FerroRosso.ttf", 40)
         font_text = pygame.font.Font("assets/times new roman.ttf", 25)
 
-        text = "Hi dude this is our connect 4 game enjoy it\n\
-first press space or the \'play\' button\n\
-The 8 puzzle consists of eight numbered, movable tiles set in a 3x3 frame.\n\
-One cell of the frame is always empty thus making it possible to move an adjacent numbered tile into the empty cell\n\
-The object of the puzzle is to place the tiles in order by making sliding moves that use the empty space.\n\
-The n-puzzle is a classical problem for modelling algorithms involving heuristics."
+        text = "Connect 4 is a two-player game in which the players first choose a color\n\
+            and then take turnsdropping their colored discs from the top into a grid.\n\
+            The pieces fall straight down, occupyingthe next available space within the column.\n\
+            The objective of the game is to connect-four ofone’s own discs of the same color next to each other vertically, horizontally, or diagonally.\n\
+            Thetwo players keep playinguntil the board is full. The winner is the player having greater number of connected-fours."
 
         # show example image
         # puzzle_image = pygame.image.load("assets/8-puzzle.png")

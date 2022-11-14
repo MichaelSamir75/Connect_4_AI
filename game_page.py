@@ -1,9 +1,10 @@
 import pygame
-import numpy as np
 from settings import *
 from sprites import *
 from button import Button
 from text_box import input_box
+from MinimaxBruning import mimimax_bruning_algorithm
+from Minimax import mimimax_algorithm
 
 class Game():
 
@@ -13,15 +14,18 @@ class Game():
         self.current = False
         self.font = pygame.font.Font(None,30)
 
-        self.new()
         self.button_new = Button('New game',self.font,button_width,button_height,(10*100/WIDTH,HEIGHT-20/100*HEIGHT),5,self.new)
         self.button_depth = Button('Update depth',self.font,button_width*1.3,button_height,(10*100/WIDTH,HEIGHT-20/100*HEIGHT+1.2*button_height),5,self.new)
         self.input_depth = input_box(self.font,(button_width*2),button_height*1.1,(10*100/WIDTH + 1.4*button_width,HEIGHT-20/100*HEIGHT+1.1*button_height))
-
-        self.depth = 7
+        
+        self.depth = 4
 
         self.score1 = 0
         self.score2 = 0
+
+        self.algorithm = mimimax_bruning_algorithm()
+        self.new()
+
 
     def checkUpdate(self):
         return self.current
@@ -46,32 +50,39 @@ class Game():
                 for row, cells in enumerate(self.cells):
                     for col, cell in enumerate(cells):
                         if cell.click(mouse_x, mouse_y):
-                            print("a7aaaaaaa")
-                            self.player = not self.make_move(row,col)
-                            self.draw_cells()
+                            if(self.make_move(row,col)):
+                                self.player = False
+                                self.draw_cells()
 
         self.button_new.check_click()
         self.button_depth.check_click()
-    
+
+    def solve(self):
+        self.game_grid = self.algorithm.solve(self.game_grid,self.depth)
+
     def new(self):
         self.all_sprites = pygame.sprite.Group()
         self.game_grid = self.create_game()
         self.player = True
+        self.input_depth.set_text(str(self.depth))
         self.draw_cells()
     
     def make_move(self,row, col):
         for i in range(ROWS-1,row-1, -1):
-            print(i)
             if(self.game_grid[i][col] == 0):
-                print(i, col)
-                self.game_grid[i][col] = 1
+                self.game_grid[i][col] = 2
                 return True
         return False
 
     def update(self):
+
+        if(not self.player):
+            self.solve()
+            self.draw_cells()
+            self.player = True
         self.all_sprites.update()
-    
-    def create_game(self):
+
+    def create_game(self):        
         grid = [[0 for i in range(COLUMNS)] for j in range(ROWS)]
         return grid
     

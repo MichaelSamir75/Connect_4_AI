@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import math
 from bitManuplation import bit
 from heuristic import heuristic
@@ -112,7 +111,7 @@ class mimimax_bruning_algorithm:
             print()
 
 
-        return final_state,self.decision_tree
+        return final_state
 
 
 
@@ -125,6 +124,6 @@ state = [[0,0,0,0,0,0,0],
         [1,0,0,1,0,0,0],
         [1,0,2,1,2,0,2]]
 
-test = mimimax_bruning_algorithm()
-test.solve(state,2)
+# test = mimimax_bruning_algorithm()
+# test.solve(state,2)
 # print()

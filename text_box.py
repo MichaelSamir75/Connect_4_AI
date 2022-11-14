@@ -28,6 +28,7 @@ class input_box:
         
     def set_text(self, text):
         self.user_text = text
+
     def check_event(self,event):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.input_rect.collidepoint(event.pos):

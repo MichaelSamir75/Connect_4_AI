@@ -1,4 +1,3 @@
-from asyncio.windows_events import NULL
 import math
 from bitManuplation import bit
 from heuristic import heuristic
@@ -14,7 +13,9 @@ class mimimax_algorithm:
     def minimax(self,state,max_height,cur_depth,isMax):
         if(cur_depth == max_height): 
             heur = heuristic()
-            return heur.get_heuristic(state,isMax)
+            x = heur.get_heuristic(state,isMax)
+            print(x)
+            return x
 
         final_state = 0
         col = []
@@ -116,16 +117,16 @@ class mimimax_algorithm:
         final_state_int = self.decision_tree[len(self.decision_tree)-1][7]
         final_state = bit_manp.IntToarr2d(final_state_int) 
 
-        # the tree begins with the leaves from left to right showing the 7 states and the 8-th of each state represent the node that the heuristic has choosen
-        for i in range(len(self.decision_tree)):
-            for j in range(len(self.decision_tree[i])):
-                print(bit_manp.IntToarr2d(self.decision_tree[i][j]), end=" ")
-                print(self.values_heuristic[i][j], end = " ")
-                if(j==len(self.decision_tree[i]) -1): print(self.values_heuristic[i][j+1], end = " ")    
-                print() 
+        # # the tree begins with the leaves from left to right showing the 7 states and the 8-th of each state represent the node that the heuristic has choosen
+        # for i in range(len(self.decision_tree)):
+        #     for j in range(len(self.decision_tree[i])):
+        #         print(bit_manp.IntToarr2d(self.decision_tree[i][j]), end=" ")
+        #         print(self.values_heuristic[i][j], end = " ")
+        #         if(j==len(self.decision_tree[i]) -1): print(self.values_heuristic[i][j+1], end = " ")    
+        #         print() 
 
 
-        return final_state,self.decision_tree
+        return final_state
 
 
 
@@ -136,6 +137,6 @@ state = [[0,0,0,0,0,0,0],
         [1,0,0,1,0,0,0],
         [1,0,2,1,2,0,2]]
 
-test = mimimax_algorithm()
-res,decision_tree = test.solve(state,2)
-print(res)
+# test = mimimax_algorithm()
+# res = test.solve(state,2)
+# print(res)
