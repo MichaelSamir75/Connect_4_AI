@@ -16,7 +16,7 @@ class Game():
         self.font = pygame.font.Font(None,30)
 
         self.button_new = Button('New game',self.font,button_width,button_height,(10*100/WIDTH,HEIGHT-20/100*HEIGHT),5,self.new)
-        self.button_depth = Button('Update depth',self.font,button_width*1.3,button_height,(10*100/WIDTH,HEIGHT-20/100*HEIGHT+1.2*button_height),5,self.new)
+        self.button_depth = Button('Update depth',self.font,button_width*1.3,button_height,(10*100/WIDTH,HEIGHT-20/100*HEIGHT+1.2*button_height),5,self.update_depth)
         self.input_depth = input_box(self.font,(button_width*2),button_height*1.1,(10*100/WIDTH + 1.4*button_width,HEIGHT-20/100*HEIGHT+1.1*button_height))
         
         self.depth = 4
@@ -24,7 +24,7 @@ class Game():
         self.score1 = 0
         self.score2 = 0
         self.show_time = 0
-
+        self.bad_depth = False
         self.algorithm = mimimax_bruning_algorithm()
         self.new()
 
@@ -64,10 +64,16 @@ class Game():
     def solve(self):
         self.game_grid = self.algorithm.solve(self.game_grid,self.depth)
 
+    def update_depth(self):
+        temp = self.input_depth.get_text()
+        self.depth = int(temp)
+
     def new(self):
         self.all_sprites = pygame.sprite.Group()
         self.game_grid = self.create_game()
         self.player = True
+        self.score1 = 0
+        self.score2 = 0
         self.input_depth.set_text(str(self.depth))
         self.draw_cells()
     
@@ -83,7 +89,6 @@ class Game():
         self.draw()
         if(not self.player):
             self.show_time = time.time()
-            print(self.show_time )
             self.solve()
             self.player = True
         if((time.time()-self.show_time) >= 0.5):
@@ -129,8 +134,8 @@ class Game():
             UIElement(87/100*WIDTH, 15/100*HEIGHT, "Robot", RED).draw(self.screen)
         UIElement(7/100*WIDTH, 19/100*HEIGHT, str(self.score1), BLACK).draw(self.screen)
         UIElement(92/100*WIDTH, 19/100*HEIGHT, str(self.score2), BLACK).draw(self.screen)
-        pygame.draw.circle(self.screen, PLAYER1, (4/100*WIDTH, 20/100*HEIGHT), cell_size/5)
-        pygame.draw.circle(self.screen, PLAYER2, (89/100*WIDTH, 20/100*HEIGHT), cell_size/5)
+        pygame.draw.circle(self.screen, PLAYER2, (4/100*WIDTH, 20/100*HEIGHT), cell_size/5)
+        pygame.draw.circle(self.screen, PLAYER1, (89/100*WIDTH, 20/100*HEIGHT), cell_size/5)
     
     def draw(self):
         self.screen.fill(BGCOLOUR)

@@ -133,8 +133,8 @@ class heuristic:
                 else:
                     score = score + self.adding2(count)
                     count = 0
-        count = 0
         score = score + self.adding2(count)
+        count = 0
 
         for i in range(3,6):
                 count = 0
@@ -202,12 +202,12 @@ class heuristic:
         # print("res2:", end="")
         # print(res2)
         if x == True:
-            temp1 = (10*res1[2] + 3*res1[1] + res1[0]) - (10*res2[2] + 3*res2[1] +  res2[0])
+            temp1 = (10*res1[2] + 3*res1[1] + res1[0]) - (8*res2[2] + 3*res2[1] +  res2[0])
             res1= [0,0,0]
             res2 = [0,0,0]
             return temp1
         elif x == False:
-            temp1 = (10*res2[2] + 3*res2[1] + res2[0]) - (10*res1[2] + 3*res1[1] +  res1[0])
+            temp1 = (10*res2[2] + 3*res2[1] + res2[0]) - (8*res1[2] + 3*res1[1] +  res1[0])
             res1= [0,0,0]
             res2= [0,0,0]
             return temp1
