@@ -1,11 +1,12 @@
 import pygame
+import time
 from settings import *
 from sprites import *
 from button import Button
 from text_box import input_box
 from MinimaxBruning import mimimax_bruning_algorithm
 from Minimax import mimimax_algorithm
-
+from heuristic import heuristic
 class Game():
 
     def __init__(self,screen):
@@ -22,6 +23,7 @@ class Game():
 
         self.score1 = 0
         self.score2 = 0
+        self.show_time = 0
 
         self.algorithm = mimimax_bruning_algorithm()
         self.new()
@@ -52,8 +54,10 @@ class Game():
                         if cell.click(mouse_x, mouse_y):
                             if(self.make_move(row,col)):
                                 self.player = False
+                                self.score1 = heuristic().getScore(self.game_grid,2)
                                 self.draw_cells()
-
+                                self.all_sprites.update()
+                                self.all_sprites.draw(self.screen)
         self.button_new.check_click()
         self.button_depth.check_click()
 
@@ -75,12 +79,18 @@ class Game():
         return False
 
     def update(self):
-
-        if(not self.player):
-            self.solve()
-            self.draw_cells()
-            self.player = True
         self.all_sprites.update()
+        self.draw()
+        if(not self.player):
+            self.show_time = time.time()
+            print(self.show_time )
+            self.solve()
+            self.player = True
+        if((time.time()-self.show_time) >= 0.5):
+            self.draw_cells()
+            self.score2 = heuristic().getScore(self.game_grid,1)
+            self.all_sprites.update()
+            self.show_time = time.time()
 
     def create_game(self):        
         grid = [[0 for i in range(COLUMNS)] for j in range(ROWS)]
@@ -112,14 +122,15 @@ class Game():
 
     def draw_score(self):
         if(self.player):
-            UIElement(2/100*WIDTH, 15/100*HEIGHT, "Player", GREEN).draw(self.screen)
+            UIElement(2/100*WIDTH, 15/100*HEIGHT, "Player", RED).draw(self.screen)
             UIElement(87/100*WIDTH, 15/100*HEIGHT, "Robot", BLACK).draw(self.screen)
         else:
             UIElement(2/100*WIDTH, 15/100*HEIGHT, "Player", BLACK).draw(self.screen)
-            UIElement(87/100*WIDTH, 15/100*HEIGHT, "Robot", GREEN).draw(self.screen)
-        UIElement(2/100*WIDTH, 20/100*HEIGHT, str(self.score1), BLACK).draw(self.screen)
-        UIElement(87/100*WIDTH, 20/100*HEIGHT, str(self.score2), BLACK).draw(self.screen)
-
+            UIElement(87/100*WIDTH, 15/100*HEIGHT, "Robot", RED).draw(self.screen)
+        UIElement(7/100*WIDTH, 19/100*HEIGHT, str(self.score1), BLACK).draw(self.screen)
+        UIElement(92/100*WIDTH, 19/100*HEIGHT, str(self.score2), BLACK).draw(self.screen)
+        pygame.draw.circle(self.screen, PLAYER1, (4/100*WIDTH, 20/100*HEIGHT), cell_size/5)
+        pygame.draw.circle(self.screen, PLAYER2, (89/100*WIDTH, 20/100*HEIGHT), cell_size/5)
     
     def draw(self):
         self.screen.fill(BGCOLOUR)
