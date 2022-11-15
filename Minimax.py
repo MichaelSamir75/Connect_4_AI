@@ -16,7 +16,7 @@ class mimimax_algorithm:
             x = heur.get_heuristic(state,isMax)
             return x
 
-        final_state = 0
+        final_state = -1
         col = []
         values = []
 
@@ -51,13 +51,14 @@ class mimimax_algorithm:
                     value = temp
                     final_state = next_state
 
-            col.append(final_state)
-            values.append(value)
-            values.append(isMax)
+            if(final_state != -1):
+                col.append(final_state)
+                values.append(value)
+                values.append(isMax)
 
-            #append to the global arrays
-            self.decision_tree.append(col)
-            self.values_heuristic.append(values)
+                #append to the global arrays
+                self.decision_tree.append(col)
+                self.values_heuristic.append(values)
 
             return value
 
@@ -93,13 +94,15 @@ class mimimax_algorithm:
                     value = temp
                     final_state = next_state
 
-            col.append(final_state)
-            values.append(value)
-            values.append(isMax)
+            if(final_state != -1):
+                col.append(final_state)
+                values.append(value)
+                values.append(isMax)
 
-            #append to the global arrays 
-            self.decision_tree.append(col)
-            self.values_heuristic.append(values)
+                #append to the global arrays 
+                self.decision_tree.append(col)
+                self.values_heuristic.append(values)
+
             return value
 
 
@@ -134,13 +137,12 @@ class mimimax_algorithm:
 
 
 
-# state = [[0,0,0,0,0,0,0],
-#         [0,0,0,0,0,0,0],
-#         [2,0,0,0,0,0,0],
-#         [1,0,0,2,0,0,0],
-#         [1,0,0,1,0,0,0],
-#         [1,0,2,1,2,0,2]]
-
+# state = [[2, 2, 2, 2, 0, 0, 2], 
+#         [2, 1, 2, 1, 0, 0, 1], 
+#         [1, 2, 2, 2, 2, 1, 1], 
+#         [2, 2, 1, 2, 1, 2, 1], 
+#         [1, 2, 2, 2, 2, 2, 1], 
+#         [2, 2, 1, 2, 1, 1, 1]]
 # test = mimimax_algorithm()
-# res = test.solve(state,2)
+# res = test.solve(state,3)
 # print(res)
