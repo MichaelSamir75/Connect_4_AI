@@ -143,12 +143,11 @@ class heuristic:
         # print("res1:", end="")
         # print(res1)
         res2 = self.get_heuristic_red(arr_state,2)
-        print(f"res1 {res1}")
-        print(f"res2 {res2}")
+        # print(f"res1 {res1}")
+        # print(f"res2 {res2}")
         # print("res2:", end="")
         # print(res2)
         if x == True:
-           
             temp1 = (10*res1[2] + 3*res1[1] + res1[0]) - (10*res2[2] + 3*res2[1] +  res2[0])
             res1= [0,0,0]
             res2 = [0,0,0]
