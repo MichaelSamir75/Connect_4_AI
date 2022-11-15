@@ -98,7 +98,7 @@ class heuristic:
         for j in range(3,6):
                 count = 0
                 temp = 0
-                for i in range(5,5-i-1,-1):
+                for i in range(5,5-j-1,-1):
                     if arr_state[i][j-temp] == x :
                         count +=1
                     else:
@@ -160,23 +160,23 @@ class heuristic:
                     temp += 1
                 score = score + self.adding2(count)
 
-                for i in range(3,6):
-                    count = 0
-                    temp = 0
-                    for j in range(6,6-i-1,-1):
-                        if array[i-temp][j] == x :
-                            count +=1
-                        else:
-                            score = score + self.adding2(count)
-                            count = 0
-                        temp += 1
-                    score = score + self.adding2(count)
+        for i in range(3,6):
+                count = 0
+                temp = 0
+                for j in range(6,6-i-1,-1):
+                    if array[i-temp][j] == x :
+                        count +=1
+                    else:
+                        score = score + self.adding2(count)
+                        count = 0
+                    temp += 1
+                score = score + self.adding2(count)
             
       
         for j in range(3,6):
                 count = 0
                 temp = 0
-                for i in range(5,5-i-1,-1):
+                for i in range(5,5-j-1,-1):
                     if array[i][j-temp] == x :
                         count +=1
                     else:
@@ -220,11 +220,14 @@ class heuristic:
 #         [1,1,2,2,2,2,1],
 #         [1,2,1,1,1,2,1],
 #         [1,2,2,1,2,1,2]]
+
 # arr = [[1,0,0,0,0,0,0],
-#        [0,1,0,0,0,0,0],
-#        [1,0,1,0,0,0,0],
-#        [0,1,0,1,0,0,0],
-#        [0,0,1,0,1,0,0],
-#        [0,0,0,1,0,1,0]]
+#        [2,1,0,0,0,0,0],
+#        [2,2,1,0,0,0,0],
+#        [1,1,2,1,0,0,0],
+#        [2,1,2,2,1,0,0],
+#        [1,2,2,1,2,0,0]]
 # test = heuristic()
+# test.get_heuristic(arr,True)
 # print(test.getScore(arr,1))
+# print(test.getScore(arr,2))
