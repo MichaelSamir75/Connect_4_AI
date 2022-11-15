@@ -31,15 +31,18 @@ class heuristic:
 
     def get_heuristic_red(self,arr_state,x):
         count = 0
+        j=0
         for i in range (6):
             self.adding(count)
             count = 0
             for(j) in range (7):
+                # print(f"row { i } col { j } value { arr_state[i][j] }")
                 if arr_state[i][j] == x:
                     count += 1
                 else:
                     self.adding(count)
                     count = 0
+        self.adding(count)
         count = 0
         for j in range (7):
             self.adding(count)
@@ -50,6 +53,8 @@ class heuristic:
                 else:
                     self.adding(count)
                     count = 0
+        
+        self.adding(count)
         count = 0
         for i in range(3,6):
                 count = 0
@@ -87,7 +92,9 @@ class heuristic:
                 else:
                     score = score + self.adding2(count)
                     count = 0
-        count = 0            
+        score = score + self.adding2(count)
+        count = 0           
+
         for j in range(7):
             score = score + self.adding2(count)
             count = 0
@@ -98,6 +105,8 @@ class heuristic:
                     score = score + self.adding2(count)
                     count = 0
         count = 0
+        score = score + self.adding2(count)
+
         for i in range(3,6):
                 count = 0
                 temp = 0
@@ -134,15 +143,35 @@ class heuristic:
         # print("res1:", end="")
         # print(res1)
         res2 = self.get_heuristic_red(arr_state,2)
+        print(f"res1 {res1}")
+        print(f"res2 {res2}")
         # print("res2:", end="")
         # print(res2)
         if x == True:
-            temp1 = (10*res1[2] + 3*res1[1] + 1 * res1[0]) - (10*res2[2] + 3*res2[1] + 1 * res2[0])
+           
+            temp1 = (10*res1[2] + 3*res1[1] + res1[0]) - (10*res2[2] + 3*res2[1] +  res2[0])
             res1= [0,0,0]
             res2 = [0,0,0]
             return temp1
         elif x == False:
-            temp1 = (10*res2[2] + 3*res2[1] + 1 * res2[0]) - (10*res1[2] + 3*res1[1] + 1 * res1[0])
+            temp1 = (10*res2[2] + 3*res2[1] + res2[0]) - (10*res1[2] + 3*res1[1] +  res1[0])
             res1= [0,0,0]
             res2= [0,0,0]
             return temp1
+
+
+
+# state = [[1,2,0,0,1,1,2],
+#         [1,1,1,2,2,1,2],
+#         [2,2,1,2,1,2,1],
+#         [1,1,2,2,2,2,1],
+#         [1,2,1,1,1,2,1],
+#         [1,2,2,1,2,1,2]]
+# arr = [[1,0,0,0,0,0,0],
+#        [1,0,0,0,0,0,0],
+#        [1,0,0,0,0,0,0],
+#        [1,0,2,0,0,0,0],
+#        [1,1,1,1,1,1,1],
+#        [1,2,2,2,2,2,2]]
+# test = heuristic()
+# print(test.get_heuristic(arr,True))

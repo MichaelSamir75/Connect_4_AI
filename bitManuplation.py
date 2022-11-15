@@ -1,10 +1,16 @@
+from tempfile import tempdir
+
+
 class bit:
+    #function converts the board to int 
     def arr2dToInt(self,array):
         x=""
+        t=""
         flag = False
         for i in range (7):
             count = 7
-        # x=x+"     "
+            # t = t + "          "
+            # x=x+"     "
             for j in range(6):
                 count = count -1
                 if array[j][i] != 0:
@@ -25,21 +31,22 @@ class bit:
             if(not(flag)):
                 x= x +"000"
             flag = False
-            for k in range (5,0,-1):
+            for k in range (5,-1,-1):
                 if array[k][i] == 2:
                     x = x +"0"
                 elif array[k][i] == 1:
                     x = x+ "1"
                 else:
                     x = x + "0"
-            x = x+ "0"
+            # x = x+ "0"
+            
         y = x[::-1]
-        # print(y)
         return self.binaryToDecimal(int(y))
-    
+
+    #function takes decimal number and convert it to binary number
     def DecimalToBinary(self,num):
         return bin(num).replace("0b", "")
-
+    #function takes biary number and convert it to decimal number
     def binaryToDecimal(self,binary):
         binary1 = binary
         decimal, i, n = 0, 0, 0
@@ -50,6 +57,7 @@ class bit:
             i += 1
         return decimal   
 
+    # function takes the int and return it the coresbonding board
     def IntToarr2d(self,long):
         long = self.DecimalToBinary(long)
         zeros = [[0 for i in range(7)] for j in range(6)]
@@ -87,9 +95,16 @@ class bit:
 #        [0,0,0,0,0,0,0],
 #        [0,0,0,1,0,0,0],
 #        [1,0,2,1,2,0,2]]
+
+# state = [[1,2,1,1,2,1,2],
+#         [1,1,1,2,2,1,2],
+#         [2,2,1,2,1,2,1],
+#         [1,1,2,2,2,2,1],
+#         [1,2,1,1,1,2,1],
+#         [1,2,2,1,2,1,2]]
+# print(state)
 # obj = bit()
-# x=obj.arr2dToInt(arr)
-# print(x)
+# x=obj.arr2dToInt(state)
+# # print(x)
 # final = obj.IntToarr2d(x)
 # print(final)
-# print(arr)
