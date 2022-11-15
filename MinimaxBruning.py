@@ -14,7 +14,7 @@ class mimimax_bruning_algorithm:
             x = heur.get_heuristic(state,isMax)
             return x
 
-        final_state = 0
+        final_state = -1
         col = []
         values = []
 
@@ -53,13 +53,15 @@ class mimimax_bruning_algorithm:
                 alpha = max(alpha,temp)
                 if beta <= alpha:
                     break
-
-            col.append(final_state)
-            values.append(value)
-            values.append(isMax)
             
-            self.decision_tree.append(col)
-            self.values_heuristic.append(values)
+            if(final_state != -1):
+                col.append(final_state)
+                values.append(value)
+                values.append(isMax)
+
+                #append to the global arrays
+                self.decision_tree.append(col)
+                self.values_heuristic.append(values)
 
             return value
         # min is the red player (bit 0)
@@ -99,13 +101,15 @@ class mimimax_bruning_algorithm:
                 if beta <= alpha:
                     break
 
-            col.append(final_state)
-            values.append(value)
-            values.append(isMax)
+            if(final_state != -1):
+                col.append(final_state)
+                values.append(value)
+                values.append(isMax)
 
-            #append to the global arrays 
-            self.decision_tree.append(col)
-            self.values_heuristic.append(values)
+                #append to the global arrays
+                self.decision_tree.append(col)
+                self.values_heuristic.append(values)
+                
             return value
 
 
