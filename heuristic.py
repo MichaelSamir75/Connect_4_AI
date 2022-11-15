@@ -187,18 +187,18 @@ class heuristic:
         return score
 
     def get_heuristic(self,state,x):
-        # bit_manp = bit()
-        # arr_state = bit_manp.IntToarr2d(state)
+        bit_manp = bit()
+        arr_state = bit_manp.IntToarr2d(state)
         # print("arr_state: " , end="")
         # print(arr_state)
         self.solOfplayer = [0,0,0]
-        res1 = self.get_heuristic_red(state,1)
+        res1 = self.get_heuristic_red(arr_state,1)
         self.solOfplayer = [0,0,0]
         # print("res1:", end="")
         # print(res1)
-        res2 = self.get_heuristic_red(state,2)
-        print(f"res1 {res1}")
-        print(f"res2 {res2}")
+        res2 = self.get_heuristic_red(arr_state,2)
+        # print(f"res1 {res1}")
+        # print(f"res2 {res2}")
         # print("res2:", end="")
         # print(res2)
         if x == True:
@@ -220,11 +220,11 @@ class heuristic:
 #         [1,1,2,2,2,2,1],
 #         [1,2,1,1,1,2,1],
 #         [1,2,2,1,2,1,2]]
-arr = [[1,0,0,0,0,0,0],
-       [0,1,0,0,0,0,0],
-       [1,0,1,0,0,0,0],
-       [0,1,0,1,0,0,0],
-       [0,0,1,0,1,0,0],
-       [0,0,0,1,0,1,0]]
-test = heuristic()
-print(test.getScore(arr,1))
+# arr = [[1,0,0,0,0,0,0],
+#        [0,1,0,0,0,0,0],
+#        [1,0,1,0,0,0,0],
+#        [0,1,0,1,0,0,0],
+#        [0,0,1,0,1,0,0],
+#        [0,0,0,1,0,1,0]]
+# test = heuristic()
+# print(test.getScore(arr,1))
