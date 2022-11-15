@@ -32,6 +32,7 @@ class heuristic:
     def get_heuristic_red(self,arr_state,x):
         count = 0
         j=0
+        # horizontal
         for i in range (6):
             self.adding(count)
             count = 0
@@ -44,6 +45,7 @@ class heuristic:
                     count = 0
         self.adding(count)
         count = 0
+        # vertical
         for j in range (7):
             self.adding(count)
             count = 0
@@ -67,6 +69,7 @@ class heuristic:
                         count = 0
                     temp += 1
                 self.adding(count)
+        
         for i in range(1,4):
                 count = 0
                 temp = 0
@@ -78,6 +81,32 @@ class heuristic:
                         count = 0
                     temp += 1
                 self.adding(count)
+
+        for i in range(3,6):
+                count = 0
+                temp = 0
+                for j in range(6,6-i-1,-1):
+                    if arr_state[i-temp][j] == x :
+                        count +=1
+                    else:
+                        self.adding(count)
+                        count = 0
+                    temp += 1
+                self.adding(count)
+            
+      
+        for j in range(3,6):
+                count = 0
+                temp = 0
+                for i in range(5,5-i-1,-1):
+                    if arr_state[i][j-temp] == x :
+                        count +=1
+                    else:
+                        self.adding(count)
+                        count = 0
+                    temp += 1
+                self.adding(count)
+
         return self.solOfplayer
     
     def getScore(self,array,x):
@@ -130,21 +159,46 @@ class heuristic:
                         count = 0
                     temp += 1
                 score = score + self.adding2(count)
+
+                for i in range(3,6):
+                    count = 0
+                    temp = 0
+                    for j in range(6,6-i-1,-1):
+                        if array[i-temp][j] == x :
+                            count +=1
+                        else:
+                            score = score + self.adding2(count)
+                            count = 0
+                        temp += 1
+                    score = score + self.adding2(count)
+            
+      
+        for j in range(3,6):
+                count = 0
+                temp = 0
+                for i in range(5,5-i-1,-1):
+                    if array[i][j-temp] == x :
+                        count +=1
+                    else:
+                        score = score + self.adding2(count)
+                        count = 0
+                    temp += 1
+                score = score + self.adding2(count)
         return score
 
     def get_heuristic(self,state,x):
-        bit_manp = bit()
-        arr_state = bit_manp.IntToarr2d(state)
+        # bit_manp = bit()
+        # arr_state = bit_manp.IntToarr2d(state)
         # print("arr_state: " , end="")
         # print(arr_state)
         self.solOfplayer = [0,0,0]
-        res1 = self.get_heuristic_red(arr_state,1)
+        res1 = self.get_heuristic_red(state,1)
         self.solOfplayer = [0,0,0]
         # print("res1:", end="")
         # print(res1)
-        res2 = self.get_heuristic_red(arr_state,2)
-        # print(f"res1 {res1}")
-        # print(f"res2 {res2}")
+        res2 = self.get_heuristic_red(state,2)
+        print(f"res1 {res1}")
+        print(f"res2 {res2}")
         # print("res2:", end="")
         # print(res2)
         if x == True:
@@ -166,11 +220,11 @@ class heuristic:
 #         [1,1,2,2,2,2,1],
 #         [1,2,1,1,1,2,1],
 #         [1,2,2,1,2,1,2]]
-# arr = [[1,0,0,0,0,0,0],
-#        [1,0,0,0,0,0,0],
-#        [1,0,0,0,0,0,0],
-#        [1,0,2,0,0,0,0],
-#        [1,1,1,1,1,1,1],
-#        [1,2,2,2,2,2,2]]
-# test = heuristic()
-# print(test.get_heuristic(arr,True))
+arr = [[1,0,0,0,0,0,0],
+       [0,1,0,0,0,0,0],
+       [1,0,1,0,0,0,0],
+       [0,1,0,1,0,0,0],
+       [0,0,1,0,1,0,0],
+       [0,0,0,1,0,1,0]]
+test = heuristic()
+print(test.getScore(arr,1))
