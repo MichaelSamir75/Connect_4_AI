@@ -18,12 +18,17 @@ class Game():
         self.button_new = Button('New game',self.font,button_width,button_height,(10*100/WIDTH,HEIGHT-20/100*HEIGHT),5,self.new)
         self.button_depth = Button('Update depth',self.font,button_width*1.3,button_height,(10*100/WIDTH,HEIGHT-20/100*HEIGHT+1.2*button_height),5,self.update_depth)
         self.input_depth = input_box(self.font,(button_width*2),button_height*1.1,(10*100/WIDTH + 1.4*button_width,HEIGHT-20/100*HEIGHT+1.1*button_height))
-        
+        self.button_minimax = Button('Minimax',self.font,button_width,button_height,(75/100*WIDTH,HEIGHT-20/100*HEIGHT),5,self.minimax)
+        self.button_prunning = Button('Minimax&Prunning',self.font,button_width*1.6,button_height,(75/100*WIDTH,HEIGHT-20/100*HEIGHT+1.2*button_height),5,self.minimax_pruning)
+        self.button_minimax.press()
+        self.buttons = [self.button_new ,self.button_depth, self.button_minimax, self.button_prunning]
+
         self.depth = 4
 
         self.score1 = 0
         self.score2 = 0
         self.show_time = 0
+        self.moves_count = 0
         self.bad_depth = False
         self.algorithm = mimimax_bruning_algorithm()
         self.new()
@@ -58,8 +63,9 @@ class Game():
                                 self.draw_cells()
                                 self.all_sprites.update()
                                 self.all_sprites.draw(self.screen)
-        self.button_new.check_click()
-        self.button_depth.check_click()
+                                self.moves_count += 1
+        for button in self.buttons:
+            button.check_click()
 
     def solve(self):
         self.game_grid = self.algorithm.solve(self.game_grid,self.depth)
@@ -68,10 +74,21 @@ class Game():
         temp = self.input_depth.get_text()
         self.depth = int(temp)
 
+    def minimax(self):
+        self.button_minimax.press()
+        self.button_prunning.enable()
+        self.algorithm = mimimax_algorithm()
+
+    def minimax_pruning(self):
+        self.button_minimax.enable()
+        self.button_prunning.press()
+        self.algorithm = mimimax_bruning_algorithm()
+
     def new(self):
         self.all_sprites = pygame.sprite.Group()
         self.game_grid = self.create_game()
         self.player = True
+        self.moves_count = 0
         self.score1 = 0
         self.score2 = 0
         self.input_depth.set_text(str(self.depth))
@@ -91,6 +108,8 @@ class Game():
             self.show_time = time.time()
             self.solve()
             self.player = True
+            self.moves_count += 1
+
         if((time.time()-self.show_time) >= 0.5):
             self.draw_cells()
             self.score2 = heuristic().getScore(self.game_grid,1)
@@ -132,6 +151,15 @@ class Game():
         else:
             UIElement(2/100*WIDTH, 15/100*HEIGHT, "Player", BLACK).draw(self.screen)
             UIElement(87/100*WIDTH, 15/100*HEIGHT, "Robot", RED).draw(self.screen)
+
+        if(self.moves_count == 42):
+            if(self.score1 > self.score2):
+                UIElement(2/100*WIDTH, HEIGHT*92/100, "GAME OVER!!! YOU WON", BLACK).draw(self.screen)
+            elif(self.score1 < self.score2):
+                UIElement(2/100*WIDTH, HEIGHT*92/100, "GAME OVER!!! MR robot WON", BLACK).draw(self.screen)
+            elif(self.score1 == self.score2):
+                UIElement(2/100*WIDTH, HEIGHT*92/100, "GAME OVER!!! its a draw", BLACK).draw(self.screen)
+
         UIElement(7/100*WIDTH, 19/100*HEIGHT, str(self.score1), BLACK).draw(self.screen)
         UIElement(92/100*WIDTH, 19/100*HEIGHT, str(self.score2), BLACK).draw(self.screen)
         pygame.draw.circle(self.screen, PLAYER2, (4/100*WIDTH, 20/100*HEIGHT), cell_size/5)
@@ -140,8 +168,8 @@ class Game():
     def draw(self):
         self.screen.fill(BGCOLOUR)
         self.create_text()
-        self.button_new.draw(self.screen)
-        self.button_depth.draw(self.screen)
+        for button in self.buttons:
+            button.draw(self.screen)
         self.input_depth.draw(self.screen)
 
         self.all_sprites.draw(self.screen)
