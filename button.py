@@ -76,5 +76,10 @@ class Button:
 		self.top_color = '#203243'
 		self.elevation = self.elevation_disable
 
+	def press(self):
+		self.enabled = False
+		self.top_color = (200,0,0)
+		self.elevation = self.elevation_disable
+
 pygame.init()
 
