@@ -124,17 +124,21 @@ class mimimax_bruning_algorithm:
         final_state_int = self.decision_tree[decision_tree_size-1][last_col_decision_tree_size-1]
         final_state = bit_manp.IntToarr2d(final_state_int) 
 
-        # print(f"final {final_state}")
+        #number of nodes expanede
+        num_of_nodes_expanded = 0
 
         # the tree begins with the leaves from left to right showing the 7 states and the 8-th of each state represent the node that the heuristic has choosen
-        # for i in range(len(self.decision_tree)):
-        #     for j in range(len(self.decision_tree[i])):
-        #         print(bit_manp.IntToarr2d(self.decision_tree[i][j]), end=" ")
-        #         print(self.values_heuristic[i][j], end = " ")
-        #         if(j==len(self.decision_tree[i]) -1): print(self.values_heuristic[i][j+1], end = " ")    
-        #         print()
-        #     print()
+        for i in range(len(self.decision_tree)):
+            for j in range(len(self.decision_tree[i])):
+                num_of_nodes_expanded+=1
+                print(bit_manp.IntToarr2d(self.decision_tree[i][j]), end=" ")
+                print(self.values_heuristic[i][j], end = " ")
+                if(j==len(self.decision_tree[i]) -1): print(self.values_heuristic[i][j+1], end = " ")    
+                print()
+            print()
 
+        print("fianl state : ", final_state)
+        print("Number of nodes expanded = ", num_of_nodes_expanded)
 
         return final_state
 
