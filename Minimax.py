@@ -49,14 +49,14 @@ class mimimax_algorithm:
 
                 if(temp > value): 
                     value = temp
-                    final_state = next_state
+                    final_state = next_state 
 
             if(final_state != -1):
                 col.append(final_state)
                 values.append(value)
                 values.append(isMax)
 
-                #append to the global arrays
+                # append to the global arrays
                 self.decision_tree.append(col)
                 self.values_heuristic.append(values)
 
@@ -109,8 +109,11 @@ class mimimax_algorithm:
 
     def solve(self,state,max_height):
 
-        #clear the decision tree in every call
+        print(state)
+
+        #clear the decision tree and the values in every call
         self.decision_tree.clear()
+        self.values_heuristic.clear()
 
         # convert the current state to int
         bit_manp = bit()
@@ -131,6 +134,7 @@ class mimimax_algorithm:
         for i in range(len(self.decision_tree)):
             for j in range(len(self.decision_tree[i])):
                 num_of_nodes_expanded+=1
+                print(self.decision_tree[i][j])
                 print(bit_manp.IntToarr2d(self.decision_tree[i][j]), end=" ")
                 print(self.values_heuristic[i][j], end = " ")
                 if(j==len(self.decision_tree[i]) -1): print(self.values_heuristic[i][j+1], end = " ")    
@@ -151,6 +155,13 @@ class mimimax_algorithm:
 #         [2, 2, 1, 2, 1, 2, 1], 
 #         [1, 2, 2, 2, 2, 2, 1], 
 #         [2, 2, 1, 2, 1, 1, 1]]
+
+# state = [[0, 0, 0, 0, 0, 0, 0], 
+#         [0, 0, 0, 0, 0, 0, 0], 
+#         [0, 0, 0, 0, 0, 0, 0], 
+#         [0, 0, 0, 0, 0, 0, 0], 
+#         [1, 0, 0, 0, 0, 0, 0], 
+#         [2, 0, 0, 2, 0, 0, 0]]        
 # test = mimimax_algorithm()
-# res = test.solve(state,3)
+# res = test.solve(state,7)
 # print(res)

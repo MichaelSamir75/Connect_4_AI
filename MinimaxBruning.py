@@ -109,8 +109,9 @@ class mimimax_bruning_algorithm:
 
     def solve(self,state,max_height):
         
-        #clear the decision tree in every call
+        #clear the decision tree and the values in every call
         self.decision_tree.clear()
+        self.values_heuristic.clear()
 
         # convert the current state to int
         bit_manp = bit()
