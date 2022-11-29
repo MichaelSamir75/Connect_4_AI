@@ -1,7 +1,7 @@
 import math
 from bitManuplation import bit
 from heuristic import heuristic
-
+from fileinput import close
 class mimimax_algorithm:
 
     # initialize the global variables
@@ -105,11 +105,24 @@ class mimimax_algorithm:
 
             return value
 
+    def write_file(self):
+        #number of nodes expanede
+        num_of_nodes_expanded = 0
+        bit_manp = bit()
+        worker_file = open("assets/node_expansion_minimax.txt","w")
+        for i in range(len(self.decision_tree)):
+            for j in range(len(self.decision_tree[i])):
+                num_of_nodes_expanded+=1
+                worker_file.write(f'{bit_manp.IntToarr2d(self.decision_tree[i][j])} {self.values_heuristic[i][j]}  ')
+                if(j==len(self.decision_tree[i]) -1):
+                    worker_file.write(f'{self.values_heuristic[i][j+1]} ')
+                worker_file.write(f'\n')
+            worker_file.write(f'\n')
+        worker_file.close()
+        return num_of_nodes_expanded
 
 
     def solve(self,state,max_height):
-
-
         #clear the decision tree and the values in every call
         self.decision_tree.clear()
         self.values_heuristic.clear()
@@ -126,33 +139,25 @@ class mimimax_algorithm:
         final_state_int = self.decision_tree[decision_tree_size-1][last_col_decision_tree_size-1]
         final_state = bit_manp.IntToarr2d(final_state_int) 
 
-        #number of nodes expanede
-        num_of_nodes_expanded = 0
+        # number of nodes expanede
+        # num_of_nodes_expanded = 0
 
         # the tree begins with the leaves from left to right showing the 7 states and the 8-th of each state represent the node that the heuristic has choosen
-        for i in range(len(self.decision_tree)):
-            for j in range(len(self.decision_tree[i])):
-                num_of_nodes_expanded+=1
-                print(bit_manp.IntToarr2d(self.decision_tree[i][j]), end=" ")
-                print(self.values_heuristic[i][j], end = " ")
-                if(j==len(self.decision_tree[i]) -1): print(self.values_heuristic[i][j+1], end = " ")    
-                print() 
-            print()               
-
+        # for i in range(len(self.decision_tree)):
+        #     for j in range(len(self.decision_tree[i])):
+        #         num_of_nodes_expanded+=1
+        #         print(bit_manp.IntToarr2d(self.decision_tree[i][j]), end=" ")
+        #         print(self.values_heuristic[i][j], end = " ")
+        #         if(j==len(self.decision_tree[i]) -1): print(self.values_heuristic[i][j+1], end = " ")    
+        #         print() 
+        #     print()               
+        num_of_nodes_expanded = self.write_file()
         print("fianl state : ", final_state)
         print("Number of nodes expanded = ", num_of_nodes_expanded)
         
 
         return final_state
 
-
-
-# state = [[2, 2, 2, 2, 0, 0, 2], 
-#         [2, 1, 2, 1, 0, 0, 1], 
-#         [1, 2, 2, 2, 2, 1, 1], 
-#         [2, 2, 1, 2, 1, 2, 1], 
-#         [1, 2, 2, 2, 2, 2, 1], 
-#         [2, 2, 1, 2, 1, 1, 1]]
 
 # state = [[0, 0, 0, 0, 0, 0, 0], 
 #         [0, 0, 0, 0, 0, 0, 0], 
@@ -161,5 +166,5 @@ class mimimax_algorithm:
 #         [1, 0, 0, 0, 0, 0, 0], 
 #         [2, 0, 0, 2, 0, 0, 0]]        
 # test = mimimax_algorithm()
-# res = test.solve(state,7)
+# res = test.solve(state,3)
 # print(res)
