@@ -30,7 +30,7 @@ class Game():
         self.show_time = 0
         self.moves_count = 0
         self.bad_depth = False
-        self.algorithm = mimimax_bruning_algorithm()
+        self.algorithm = mimimax_algorithm()
         self.new()
 
 
@@ -107,6 +107,7 @@ class Game():
         if(not self.player):
             self.show_time = time.time()
             self.solve()
+            print(f"Time spent: {time.time()-self.show_time}")
             self.player = True
             self.moves_count += 1
 

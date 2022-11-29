@@ -109,7 +109,6 @@ class mimimax_algorithm:
 
     def solve(self,state,max_height):
 
-        print(state)
 
         #clear the decision tree and the values in every call
         self.decision_tree.clear()
@@ -134,12 +133,11 @@ class mimimax_algorithm:
         for i in range(len(self.decision_tree)):
             for j in range(len(self.decision_tree[i])):
                 num_of_nodes_expanded+=1
-                print(self.decision_tree[i][j])
                 print(bit_manp.IntToarr2d(self.decision_tree[i][j]), end=" ")
                 print(self.values_heuristic[i][j], end = " ")
                 if(j==len(self.decision_tree[i]) -1): print(self.values_heuristic[i][j+1], end = " ")    
                 print() 
-            print()    
+            print()               
 
         print("fianl state : ", final_state)
         print("Number of nodes expanded = ", num_of_nodes_expanded)

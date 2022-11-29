@@ -57,18 +57,17 @@ class Start():
         font_rules = pygame.font.Font("assets/FerroRosso.ttf", 40)
         font_text = pygame.font.Font("assets/times new roman.ttf", 25)
 
-        text = "Connect 4 is a two-player game in which the players first choose a color\n\
-            and then take turnsdropping their colored discs from the top into a grid.\n\
-            The pieces fall straight down, occupyingthe next available space within the column.\n\
-            The objective of the game is to connect-four ofone’s own discs of the same color next to each other vertically, horizontally, or diagonally.\n\
-            Thetwo players keep playinguntil the board is full. The winner is the player having greater number of connected-fours."
+        text = "Connect 4 is a two-player game in which the players first choose a color and then take turnsdropping their colored discs from the top into a grid.\n\
+The pieces fall straight down, occupyingthe next available space within the column.\n\
+The objective of the game is to connect-four ofone’s own discs of the same color next to each other vertically, horizontally, or diagonally.\n\
+The two players keep playinguntil the board is full. The winner is the player having greater number of connected-fours."
 
-        # show example image
-        # puzzle_image = pygame.image.load("assets/8-puzzle.png")
-        # puzzle_image = pygame.transform.scale(puzzle_image, (puzzle_image.get_width()*0.9, puzzle_image.get_height()*0.9))
-        # imagerect = puzzle_image.get_rect()
-        # puzzle_image.convert()
-        # self.screen.blit(puzzle_image, (WIDTH/2-puzzle_image.get_width()/2,HEIGHT-puzzle_image.get_height()-175))
+        #show example image
+        puzzle_image = pygame.image.load("assets/c4.png")
+        puzzle_image = pygame.transform.scale(puzzle_image, (puzzle_image.get_width()*0.5, puzzle_image.get_height()*0.5))
+        imagerect = puzzle_image.get_rect()
+        puzzle_image.convert()
+        self.screen.blit(puzzle_image, (WIDTH/2-puzzle_image.get_width()/2,HEIGHT-puzzle_image.get_height()-150))
 
 
         text_rules = font_rules.render("Rules:", True,  "#475F77")
